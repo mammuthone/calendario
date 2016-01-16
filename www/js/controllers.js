@@ -1,8 +1,9 @@
 angular.module('starter.controllers',[])
 
-.controller('CalendarController', function($scope,  UtilsService, $translate, $ionicModal, $ionicPopup){
-	$scope.calendar = {}
-	$scope.newEvent = {}
+.controller('CalendarController', function($scope, UtilsService, $translate, $ionicModal, $ionicPopup){
+	$scope.calendar = {};
+	$scope.newEvent = {};
+	var calendar = [];
 	$scope.calendar.options = {
 		defaultDate: UtilsService.today(),
 		minDate: UtilsService.rangeDate().minDate,
@@ -11,29 +12,28 @@ angular.module('starter.controllers',[])
 		dayNamesLength: 1, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
 		mondayIsFirstDay: true,//set monday as first day of week. Default is false
 		eventClick: function(date) { // called before dateClick and only if clicked day has events
-			$scope.aggiungiEvento();
-			console.log(date);
+			$scope.listaEventi = date.event;
+			//$scope.listaEventi.push(date.)
 		},
 		dateClick: function(date) { // called every time a day is clicked
-	  	$scope.dateClicked = date;
+	  	var d = date;
+	  	window.localStorage.setItem('date', UtilsService.convertDate(d));
 	  	console.log(date);
 		},
 		changeMonth: function(month, year) {
-	  	console.log(month, year);
+	  	//console.log(month, year);
 		},
 		filteredEventsChange: function(filteredEvents) {
-	  	console.log(filteredEvents);
+	  	//console.log(filteredEvents);
 		},
   };
 
-  $scope.calendar.events = [
-		{ eventClass: 'expired', date: "2015-08-18"}, //value of eventClass will be added to CSS class of the day element
-		{ foo: "bar", date: "2016-01-20"},
-		{ date: "2016-01-16"}
+    $scope.calendar.events = [
+		{ date: "2016-01-20", evento: "Evento di prova 1"},
+		{ date: "2016-01-21", evento: "Evento di prova 2"}
   ];
 
-  $scope.aggiungiEvento = function(){
-  	$scope.calendar.events.push({date: "2016-01-19"})
+  $scope.aggiungiEvento = function(date){
   	$ionicModal.fromTemplateUrl('templates/modal.html', {
     	scope: $scope,
       animation: 'slide-in-up'
@@ -43,11 +43,16 @@ angular.module('starter.controllers',[])
     });
   }
 
+
   $scope.chiudiModal = function () {
-  			$scope.newEvent.date = UtilsService.convertDate($scope.dateClicked);
-  			console.log($scope.newEvent.date)
-  			$scope.calendar.events.push($scope.newEvent);
-  			$scope.calendar.events.push({date: "2016-01-15"});
-        $scope.modal.hide();
+  	console.log($scope.modal);
+  	if($scope.evento != null || $scope.evento != ""){
+  		$scope.calendar.events.push({date: window.localStorage.getItem('date'), evento: $scope.modal.appuntamento})
+  	}
+		$scope.modal.hide();
   };
+
+  $scope.emptyCalendar = function(){
+  	$scope.calendar.events= [];
+  }
 });

@@ -64,7 +64,7 @@
       restrict: 'E',
       scope: {
         options: '=?',
-        events: '=?'
+        events: '='
       },
       template: template,
       controller: Controller
@@ -154,14 +154,14 @@
       calculateSelectedDate();
     });
 
-    $scope.$watch('options.disabledDates', function() {
+    $scope.$watchCollection('options.disabledDates', function() {
       if($scope.options.disabledDates) {
           createMappedDisabledDates();
           calculateDisabledDates();
       }
     });
 
-    $scope.$watch('events', function() {
+    $scope.$watchCollection('events', function() {
       createMappedEvents();
       calculateWeeks();
     });
@@ -178,6 +178,7 @@
         });
       });
       if('function' === typeof $scope.options.filteredEventsChange){
+        //debugger;
         $scope.options.filteredEventsChange(filteredEvents);
       }
     });
@@ -203,6 +204,7 @@
 
     function bindEvent(date) {
       if (!date || !$scope.mappedEvents) { return; }
+      //debugger;
       date.event = [];
       $scope.mappedEvents.forEach(function(event) {
         if (date.date.getFullYear() === event.date.getFullYear()

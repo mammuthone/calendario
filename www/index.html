@@ -8,6 +8,7 @@
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
 
     <!-- ionic/angularjs js -->
@@ -36,8 +37,24 @@
       </ion-header-bar>
       <ion-content>
           <flex-calendar options="calendar.options" events="calendar.events"></flex-calendar>
-          <button class="button padding button-full button-balanced" ng-click="aggiungiEvento()">Aggiungi evento</button>
+          <!-- <button class="button padding button-full button-balanced" ng-click="aggiungiEvento()">Aggiungi evento</button> -->
+         
+          <button class="button padding button-full button-assertive" ng-click="emptyCalendar()">
+            Svuota calendario
+          </button>
+          <ion-list>
+            <ion-item ng-repeat="event in listaEventi">
+              {{event.evento}}
+            </ion-item>
+          </ion-list>
       </ion-content>
+       <div class="float-button" ng-click="aggiungiEvento()">
+            <span class="height-fix">
+              <a class="content">
+                <i class="ion-plus-round"> </i>
+              </a>
+            </span>
+          </div>
     </ion-pane>
   </body>
 </html>

@@ -3,11 +3,10 @@ angular.module('starter.services', [])
 .factory('UtilsService', function(){
 	return {
         convertDate: function(date){
-        	date.month = parseInt(date.month) + 1;
-        	if (date.month < 10) {
-                date.month = '0' + date.month
+        	if (date._month < 10) {
+                date._month = '0' + date._month
             }
-        	return date.year+'-'+date.month+'-'+date.day;
+        	return date.year.toString()+'-'+date._month.toString()+'-'+date.day.toString();
         },
 
         today: function () {

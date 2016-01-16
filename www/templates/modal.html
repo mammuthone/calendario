@@ -1,11 +1,20 @@
 <div class="modal">
-    <ion-header-bar>
-        <h1 class="title">Evento</h1>
+    <ion-header-bar class="bar bar-header bar-positive">
+          <h1 class="title">Evento del {{ getEventDate }}</h1>
+          <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
     </ion-header-bar>
     <ion-content>
         <div class="list">
-              <input ng-model="newEvent.evento" type="text" placeholder="Scrivi qui...">
+            
+            <input ng-model="modal.appuntamento" type="text" placeholder="Scrivi qui...">
           </div>
         <button class="button button-full button-positive" ng-click="chiudiModal()">Ok</button>
+
+        <div ng-show="date.events">
+            <h2>Eventi già presenti</h2>
+            <div ng-repeat="evento in date.events">
+                <p>{{date.evento}}</p>
+            </div>
+        </div>
     </ion-content>
 </div>
